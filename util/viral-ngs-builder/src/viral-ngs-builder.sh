@@ -10,7 +10,7 @@ main() {
     # generate a script /usr/local/bin/viral-ngs to invoke the viral-ngs docker image
     echo "#!/bin/bash
 set -x
-dx-docker run -v \$(pwd):/user-data broadinstitute/viral-ngs$viral_ngs_version \"\$@\"" > /usr/local/bin/viral-ngs
+dx-docker run -v \$(pwd):/user-data --workdir /home/viral-ngs-user broadinstitute/viral-ngs$viral_ngs_version \"\$@\"" > /usr/local/bin/viral-ngs
     chmod +x /usr/local/bin/viral-ngs
     echo /usr/local/bin/viral-ngs >> /tmp/resources-manifest.txt
 
