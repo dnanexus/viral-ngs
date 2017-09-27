@@ -66,6 +66,10 @@ main() {
     dx-jobutil-add-output alignment_genomecov "$genomecov"
     dxid="$(dx upload assembly.fasta --destination "${name}.fasta" --brief)"
     dx-jobutil-add-output final_assembly --class=file "$dxid"
-    dxid="$(dx upload coverage_plot.pdf --destination "${name}.coverage_plot.pdf" --brief)"
-    dx-jobutil-add-output coverage_plot --class=file "$dxid"
+    if [ $alignment_read_count -gt 0 ]; then
+      dxid="$(dx upload coverage_plot.pdf --destination "${name}.coverage_plot.pdf" --brief)"
+      dx-jobutil-add-output coverage_plot --class=file "$dxid"
+    else
+      echo "No reads present in mapped bam file; skipping plot upload."
+    fi
 }
