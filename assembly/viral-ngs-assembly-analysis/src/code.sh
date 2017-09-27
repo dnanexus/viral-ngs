@@ -31,8 +31,6 @@ main() {
         --aligner_options "$aligner_options" --NOVOALIGN_LICENSE_PATH /user-data/novoalign.lic
     samtools index mapped.bam
 
-    viral-ngs reports.py plot_coverage /user-data/mapped.bam /user-data/coverage_plot.pdf --plotFormat pdf --plotWidth 1100 --plotHeight 850 --plotDPI 100
-
     # collect some statistics
     assembly_length=$(tail -n +1 assembly.fasta | tr -d '\n' | wc -c)
     alignment_read_count=$(samtools view -c mapped.bam)
@@ -40,6 +38,13 @@ main() {
     alignment_base_count=$(samtools view mapped.bam | cut -f10 | tr -d '\n' | wc -c)
     mean_coverage_depth=$(( alignment_base_count / assembly_length ))
     samtools flagstat  all.bam > stats.txt
+
+    # only plot coverage if input bam has reads
+    if [ $alignment_read_count -gt 0 ]; then
+      viral-ngs reports.py plot_coverage /user-data/mapped.bam /user-data/coverage_plot.pdf --plotFormat pdf --plotWidth 1100 --plotHeight 850 --plotDPI 100
+    else
+      echo "No reads present in mapped bam file; skipping plot generation."
+    fi
 
     # Continue gathering statistics
     genomecov=$(bedtools genomecov -ibam mapped.bam | dx upload -o "${name}.genomecov.txt" --brief -)
