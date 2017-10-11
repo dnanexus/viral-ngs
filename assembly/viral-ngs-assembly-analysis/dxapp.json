@@ -87,6 +87,10 @@
       "class": "int"
     },
     {
+      "name": "assembly_length_unambiguous",
+      "class": "int"
+    },
+    {
       "name": "alignment_read_count",
       "class": "int"
     },
