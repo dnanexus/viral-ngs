@@ -32,7 +32,8 @@ main() {
     samtools index mapped.bam
 
     # collect some statistics
-    assembly_length=$(tail -n +1 assembly.fasta | tr -d '\n' | wc -c)
+    assembly_length=$(grep -v '^>' assembly.fasta | tr -d '\n' | wc -c)
+    assembly_length_unambiguous=$(grep -v '^>' assembly.fasta | tr -d '\nNn' | wc -c)
     alignment_read_count=$(samtools view -c mapped.bam)
     reads_paired_count=$(samtools flagstat all.bam | grep properly | awk '{print $1}')
     alignment_base_count=$(samtools view mapped.bam | cut -f10 | tr -d '\n' | wc -c)
@@ -51,6 +52,7 @@ main() {
 
     # upload outputs
     dx-jobutil-add-output assembly_length $assembly_length
+    dx-jobutil-add-output assembly_length_unambiguous $assembly_length_unambiguous
     dx-jobutil-add-output reads_paired_count $reads_paired_count
     dx-jobutil-add-output alignment_read_count $alignment_read_count
     dx-jobutil-add-output alignment_base_count $alignment_base_count
