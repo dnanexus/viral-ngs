@@ -24,11 +24,6 @@
       "default": "-r Random -l 40 -g 40 -x 20 -t 100 -k -c 3"
     },
     {
-      "name": "resources",
-      "class": "file",
-      "patterns": ["viral-ngs-*.resources.tar.gz"]
-    },
-    {
       "name": "novocraft_license",
       "class": "file",
       "patterns": ["novoalign.lic", "Novoalign.lic"],
@@ -39,6 +34,12 @@
       "name": "gatk_tarball",
       "class": "file",
       "patterns": ["GenomeAnalysisTK-*.tar.bz2"]
+    },
+    {
+      "name": "viral_ngs_version",
+      "class": "string",
+      "help": "Desired version of broadinstitute/viral-ngs image on Docker Hub, either :TAG or @DIGEST",
+      "default": ":1.12.0"
     }
   ],
   "outputSpec": [

@@ -189,7 +189,6 @@ def build_assembly_workflow(species, resources):
             "assembly": dxpy.dxlink({"stage": refine2_stage_id, "outputField": "refined_assembly"}),
             "reads": dxpy.dxlink({"stage": refine2_stage_id, "inputField": "reads"}),
             "aligner_options": "-r Random -l 40 -g 40 -x 20 -t 100 -k",
-            "resources": dxpy.dxlink({"stage": depletion_stage_id, "inputField": "resources"}),
             "novocraft_license": dxpy.dxlink({"stage": scaffold_stage_id, "inputField": "novocraft_license"}),
             "gatk_tarball": dxpy.dxlink({"stage": scaffold_stage_id, "inputField": "gatk_tarball"})
         }

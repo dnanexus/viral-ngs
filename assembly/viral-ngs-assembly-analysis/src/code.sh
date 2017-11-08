@@ -20,6 +20,7 @@ main() {
     fi
 
     # index assembly
+    alias viral-ngs="dx-docker run -v $(pwd):/user-data broadinstitute/viral-ngs$viral_ngs_version"
     viral-ngs bash -c "read_utils.py index_fasta_picard /user-data/assembly.fasta &&
                        read_utils.py index_fasta_samtools /user-data/assembly.fasta &&
                        novoindex /user-data/assembly.nix /user-data/assembly.fasta"
