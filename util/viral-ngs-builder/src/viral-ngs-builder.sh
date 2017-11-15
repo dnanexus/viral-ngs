@@ -10,8 +10,13 @@ main() {
     # generate a script /usr/local/bin/viral-ngs to invoke the viral-ngs docker image
     cat > /usr/local/bin/viral-ngs <<EOF
 #!/bin/bash
-set -x
-dx-docker run -v \$(pwd):/user-data --entrypoint /bin/bash broadinstitute/viral-ngs$viral_ngs_version -c "source /opt/viral-ngs/easy-deploy-viral-ngs.sh load && \$@"
+set -ex
+cat > dxrunme.sh <<FOE
+set -ex
+source /opt/viral-ngs/easy-deploy-viral-ngs.sh load
+\$@
+FOE
+dx-docker run -v \$(pwd):/user-data --entrypoint /bin/bash broadinstitute/viral-ngs$viral_ngs_version /user-data/dxrunme.sh
 EOF
     chmod +x /usr/local/bin/viral-ngs
     cat /usr/local/bin/viral-ngs
