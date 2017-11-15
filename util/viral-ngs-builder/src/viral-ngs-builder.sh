@@ -8,7 +8,7 @@ main() {
     ls -lhR /tmp/dx-docker-cache/
     find /tmp/dx-docker-cache -type f > /tmp/resources-manifest.txt
     # generate a script /usr/local/bin/viral-ngs to invoke the viral-ngs docker image
-    echo > /usr/local/bin/viral-ngs <<EOF
+    cat > /usr/local/bin/viral-ngs <<EOF
 #!/bin/bash
 set -x
 dx-docker run -v \$(pwd):/user-data --entrypoint /bin/bash broadinstitute/viral-ngs$viral_ngs_version -c "source /opt/viral-ngs/easy-deploy-viral-ngs.sh load && \$@"
