@@ -11,12 +11,13 @@ main() {
     cat > /usr/local/bin/viral-ngs <<EOF
 #!/bin/bash
 set -ex
-printf "set -ex
+echo '#!/bin/bash
+set -ex
 source /opt/viral-ngs/easy-deploy-viral-ngs.sh load
-%q
-" "\$@" > dxrunme.sh
-cat dxrunme.sh
-dx-docker run -v \$(pwd):/user-data --entrypoint /bin/bash broadinstitute/viral-ngs$viral_ngs_version /user-data/dxrunme.sh
+"\$@"' > dxentrypoint.sh
+chmod +x dxentrypoint.sh
+cat dxentrypoint.sh
+dx-docker run -v \$(pwd):/user-data --entrypoint /user-data/dxentrypoint.sh broadinstitute/viral-ngs$viral_ngs_version "\$@"
 EOF
     chmod +x /usr/local/bin/viral-ngs
     cat /usr/local/bin/viral-ngs
