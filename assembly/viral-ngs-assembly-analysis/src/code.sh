@@ -40,6 +40,8 @@ main() {
     mean_coverage_depth=$(( alignment_base_count / assembly_length ))
     samtools flagstat  all.bam > stats.txt
 
+    pwd
+    ls -l *.bam
     # only plot coverage if input bam has reads
     if [ $alignment_read_count -gt 0 ]; then
       viral-ngs reports.py plot_coverage /user-data/mapped.bam /user-data/coverage_plot.pdf --plotFormat pdf --plotWidth 1100 --plotHeight 850 --plotDPI 100
@@ -47,6 +49,8 @@ main() {
       echo "No reads present in mapped bam file; skipping plot generation."
     fi
 
+    pwd
+    ls -l *.bam
     # Continue gathering statistics
     genomecov=$(bedtools genomecov -ibam mapped.bam | dx upload -o "${name}.genomecov.txt" --brief -)
 

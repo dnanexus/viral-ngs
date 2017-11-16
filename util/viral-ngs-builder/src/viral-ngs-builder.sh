@@ -12,8 +12,9 @@ main() {
 #!/bin/bash
 set -ex
 echo '#!/bin/bash
-set -ex
+set -e
 source /opt/viral-ngs/easy-deploy-viral-ngs.sh load
+set -x
 "\$@"' > dxentrypoint.sh
 chmod +x dxentrypoint.sh
 cat dxentrypoint.sh
