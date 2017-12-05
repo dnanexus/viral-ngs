@@ -64,5 +64,10 @@
     "release": "14.04",
     "timeoutPolicy": {"*": {"hours": 24}}
   },
+  "access": {
+    "network": [
+      "*"
+    ]
+  },
   "authorizedUsers": []
 }

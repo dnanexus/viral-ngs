@@ -62,5 +62,10 @@
     "timeoutPolicy": {"*": {"hours": 24}},
     "interpreter": "bash",
     "distribution": "Ubuntu"
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
   }
 }
