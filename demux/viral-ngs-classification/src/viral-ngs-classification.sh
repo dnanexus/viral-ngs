@@ -84,7 +84,7 @@ function process_bam() {
                   "/user-data/${kraken_db_prefix}" \
                   --outReads "/user-data/${output_root_dir}/${output_filename_prefix}.kraken-classified.txt.gz" \
                   --outReport "/user-data/${output_root_dir}/${output_filename_prefix}.kraken-report.txt" \
-                  --numThreads 4
+                  --threads 4
 
   # Use Krona to visualize taxonomic profiling output from Kraken.
   viral-ngs metagenomics.py krona \

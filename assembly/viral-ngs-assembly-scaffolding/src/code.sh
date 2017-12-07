@@ -10,10 +10,6 @@ main() {
     dx download "$trinity_reads" -o reads.bam
     for pid in "${pids[@]}"; do wait $pid || exit $?; done
 
-    if [ "$novocraft_license" != "" ]; then
-        dx cat "$novocraft_license" > novoalign.lic
-    fi
-
     # run assembly.py order_and_orient to scaffold the contigs
     viral-ngs assembly.py order_and_orient \
         /user-data/trinity_contigs.fasta /user-data/reference_genome.fasta /user-data/intermediate_scaffold.fasta
@@ -25,8 +21,7 @@ main() {
     # run assembly.py impute_from_reference to check assembly quality and clean the contigs
     exit_code=0
     viral-ngs assembly.py impute_from_reference \
-        /user-data/intermediate_scaffold.fasta /user-data/reference_genome.fasta /user-data/scaffold.fasta \
-        --NOVOALIGN_LICENSE_PATH /user-data/novoalign.lic \
+        /user-data/intermediate_scaffold.fasta /user-data/reference_genome.fasta /user-data/scaffold.fasta
         --newName "${name}" --replaceLength "$replace_length" \
         --minLengthFraction "$min_length_fraction" --minUnambig "$min_unambig" \
         --aligner "$aligner" 2> >(tee impute.stderr.log >&2) || exit_code=$?
