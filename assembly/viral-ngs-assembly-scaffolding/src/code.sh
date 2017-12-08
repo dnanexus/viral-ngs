@@ -20,6 +20,7 @@ main() {
 
     # run assembly.py impute_from_reference to check assembly quality and clean the contigs
     exit_code=0
+    touch impute.stderr.log
     viral-ngs assembly.py impute_from_reference \
         /user-data/intermediate_scaffold.fasta /user-data/reference_genome.fasta /user-data/scaffold.fasta
         --newName "${name}" --replaceLength "$replace_length" \
