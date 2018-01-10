@@ -7,9 +7,9 @@ channels:
 dependencies:
 - dxpy=0.225.0=py27_0
 - fusepy=2.0.4=py27_0
-- libmagic=5.25=0
+- libmagic
 - python-dateutil=2.3=py27_0
-- python-magic=0.4.12=py27_0
+- python-magic
 - asn1crypto=0.22.0=py27_0
 - beautifulsoup4=4.6.0=py27_0
 - ca-certificates=2017.7.27.1=0
@@ -38,7 +38,7 @@ dependencies:
 - sqlite=3.13.0=1
 - tk=8.5.19=2
 - urllib3=1.22=py27_0
-- wheel=0.30.0=py_1
+- wheel=0.30.0
 - ws4py=0.4.2=py27_0
 - xattr=0.9.2=py27_0
 - zlib=1.2.11=0
