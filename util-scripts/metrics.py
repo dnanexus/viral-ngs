@@ -20,6 +20,8 @@ parser.add_argument('csvfile', type=argparse.FileType('w'), help='Path of the me
 parser.add_argument('ids', type=str, nargs='+', help='IDs for which information should be returned. These can be project-<ID>, analysis-<ID>, or job-<ID>.')
 parser.add_argument('--state', dest='states', nargs='+', choices=["done", "failed", "running", "terminated", "runnable"], default=None, help="Execution states to include when returning information for all jobs or analyses in a project. Note: 'runnable' means the item is waiting to be executed.")
 parser.add_argument('--executableName', dest='executable_names', nargs='+', default=None, help="DNAnexus executable names to include. If omitted, all are included.")
+parser.add_argument('--created_after', dest='created_after', type=str, default=None, help="The time (or offset) to use as a lower bound for inclusion.")
+parser.add_argument('--created_before', dest='created_before', type=str, default=None, help="The time (or offset) to use as an upper bound for inclusion.")
 parser.add_argument('--noDescendants', dest='no_descendants', action='store_true', help="Include top-level executions only. This is helpful when specifying a project-ID and child jobs are not desired in the output.")
 
 def available_cpu_count():
@@ -62,9 +64,9 @@ if __name__ == "__main__":
         for project_id in project_ids:
             if args.states:
                 for state in args.states:
-                    project_job_ids.extend([e["id"] for e in dxpy.find_executions(project=project_id, state=state)])
+                    project_job_ids.extend([e["id"] for e in dxpy.find_executions(project=project_id, state=state, created_before=args.created_before, created_after=args.created_after)])
             else:
-                project_job_ids.extend([e["id"] for e in dxpy.find_executions(project=project_id)])
+                project_job_ids.extend([e["id"] for e in dxpy.find_executions(project=project_id, created_before=args.created_before, created_after=args.created_after)])
 
     execution_ids_to_describe = list(set(analysis_ids+project_job_ids+job_ids))
 
@@ -93,7 +95,7 @@ if __name__ == "__main__":
         for execution_key in ["output"]:
             if execution_key in execution and execution[execution_key] is not None:
                 for key, value in execution[execution_key].items():
-                    if type(value) == int:
+                    if type(value) in (int, float):
                         field_name=key.split(".")[-1]
                         metrics[field_name] = value
                         keys_seen.add(field_name)
